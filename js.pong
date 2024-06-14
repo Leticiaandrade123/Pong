@@ -1,0 +1,74 @@
+//variáveis da bolinha
+let xBolinha = 300;
+let yBolinha = 200;
+let diametro = 15;
+let raio = diametro / 2;
+//diametro da bolinha
+let velocidadexBolinha = 4;
+let velocidadeyBolinha = 4;
+let raqueteComprimento = 10;
+let raqueteAltura = 90;
+//variáveis da raquete
+let xRaquete = 5;
+let yRaquete = 150;
+//variáveis do oponente
+let xRaqueteOponente = 585;
+let yRaqueteOponente = 150;
+let velocidadeYOponente;
+let colidiu = false;
+function setup() {
+createCanvas(600, 400);
+}
+function draw() {
+background(5)
+mostraBolinha();
+movimentaBolinha();
+verificaColisaoBorda();
+mostraRaquete(xRaquete, yRaquete);
+movimentaRaquete();
+verificaColisaoRaquete();
+mostraRaqueteOponente(xRaqueteOponente, yRaqueteOponente);
+movimentaRaqueteOponente();
+}
+function mostraBolinha(){
+circle(xBolinha, yBolinha, diametro);
+}
+function movimentaBolinha(){
+xBolinha += velocidadexBolinha;
+yBolinha += velocidadeyBolinha;
+}
+function verificaColisaoBorda(){
+if (xBolinha + raio > width ||
+xBolinha - raio < 0){
+velocidadexBolinha *= -1;
+}
+if (yBolinha + raio > height ||
+yBolinha - raio < 0)
+{
+velocidadeyBolinha *= -1;
+}
+}
+function mostraRaquete(x, y){
+rect(x, y, raqueteComprimento, raqueteAltura);
+}
+function mostraRaqueteOponente(){
+rect(xRaqueteOponente, yRaqueteOponente, raqueteComprimento, raqueteAltura);
+}
+function movimentaRaquete() {
+if (keyIsDown(UP_ARROW)){
+yRaquete -= 10;
+}
+if (keyIsDown(DOWN_ARROW)){
+yRaquete += 10;
+}
+}
+function verificaColisaoRaquete(){
+if (xBolinha - raio < xRaquete + raqueteComprimento
+&& yBolinha - raio < yRaquete + raqueteAltura && yBolinha + raio > yRaquete){
+velocidadexBolinha *= -1;
+}
+}
+function movimentaRaqueteOponente(){
+velocidadeYOponente = yBolinha - yRaqueteOponente - raqueteComprimento /2 - 30;
+yRaqueteOponente += velocidadeYOponente
+}
